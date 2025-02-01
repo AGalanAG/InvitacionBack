@@ -25,6 +25,7 @@ const logger = winston.createLogger({
 });
 
 const app = express();
+app.set('trust proxy', 1);
 const port = process.env.PORT || 3001;
 
 // 2. Middleware de seguridad
@@ -68,13 +69,17 @@ app.use(cors({
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 150,
-  message: 'Límite de solicitudes excedido'
+  message: 'Límite de solicitudes excedido',
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 const authLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 30,
-  message: 'Demasiados registros desde esta IP'
+  message: 'Demasiados registros desde esta IP',
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // 5. Configuración de MySQL para Clever Cloud
