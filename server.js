@@ -142,7 +142,7 @@ app.post('/api/attendance', apiLimiter, authLimiter, validateAttendance, async (
 
     // LLamar a los servicios de notificación
     // Determinar si se debe enviar un mensaje de WhatsApp o un correo electrónico
-    if (contactMethod === 'email') {
+    if (req.body.contactMethod === 'email') {
       await sendEmailConfirmation(req.body.contactInfo);
     }else{
       await sendWhatsAppConfirmation(req.body.contactInfo);
