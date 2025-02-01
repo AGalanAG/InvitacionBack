@@ -49,7 +49,7 @@ app.use(helmet({
 const allowedOrigins = [
   'https://*.vercel.app', // Dominios de Vercel
   'https://*.onrender.com', // Dominios de Render
-  process.env.NODE_ENV === 'development' && 'http://localhost:3000'
+  process.env.NODE_ENV === 'development' && 'http://localhost:3000' //Si estamos en desarrollo permitimos localhost si no, no lo permitimos 
 ].filter(Boolean);
 
 app.use(cors({
@@ -82,6 +82,13 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.use(express.json()); // Para parsear el cuerpo de las solicitudes JSON
+app.use((req, res, next) => {
+  console.log('Cuerpo de la solicitud:', req.body);
+  next();
+});
+
+
 // 5. Configuración de MySQL para Clever Cloud
 const pool = mysql.createPool({
   host: process.env.MYSQL_ADDON_HOST,
@@ -108,6 +115,8 @@ const validateAttendance = [
   }),
   body('guests').isInt({ min: 0, max: 10 })
 ];
+
+
 
 // 7. Endpoints
 app.post('/api/attendance', apiLimiter, authLimiter, validateAttendance, async (req, res) => {
