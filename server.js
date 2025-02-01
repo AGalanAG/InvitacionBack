@@ -9,6 +9,7 @@ const winston = require('winston');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 const validator = require('validator');
+const { sendEmailConfirmation, sendWhatsAppConfirmation } = require('./services/notificationService');
 
 dotenv.config();
 
