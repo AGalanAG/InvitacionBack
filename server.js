@@ -140,6 +140,14 @@ app.post('/api/attendance', apiLimiter, authLimiter, validateAttendance, async (
       [req.body.fullName, req.body.contactMethod, req.body.contactInfo, req.body.guests]
     );
 
+    // LLamar a los servicios de notificación
+    // Determinar si se debe enviar un mensaje de WhatsApp o un correo electrónico
+    if (contactMethod === 'email') {
+      await sendEmailConfirmation(req.body.contactInfo);
+    }else{
+      await sendWhatsAppConfirmation(req.body.contactInfo);
+    }
+
     res.status(201).json({ message: 'Registro exitoso' });
   } catch (error) {
     logger.error(`Error en registro: ${error.message}`);
