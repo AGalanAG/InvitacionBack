@@ -50,6 +50,8 @@ app.use(helmet({
 const allowedOrigins = [
   'https://*.vercel.app', // Dominios de Vercel
   'https://*.onrender.com', // Dominios de Render
+  //permitir el dominio de Vercel pormedio de una variable de entorno
+  process.env.VERCEL_URL && `${process.env.VERCEL_URL}`,
   process.env.NODE_ENV === 'development' && 'http://localhost:3000' //Si estamos en desarrollo permitimos localhost si no, no lo permitimos 
 ].filter(Boolean);
 
