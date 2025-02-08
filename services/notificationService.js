@@ -74,7 +74,7 @@ async function sendWhatsAppConfirmation(phoneNumber) {
       type: 'template',
       template: {
         name: `${process.env.WHATSAPP_TEMPLATE_NAME}`,  // El nombre de la plantilla
-        language: { code: 'es_MX' }
+        language: { code: 'es' }
       }
     };
   
